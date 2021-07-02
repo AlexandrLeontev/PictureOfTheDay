@@ -1,5 +1,5 @@
 package geekbarains.material.util
-
+//Этот класс мы будем использовать для отображения равносторонних фотографий на всю ширину экрана
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView

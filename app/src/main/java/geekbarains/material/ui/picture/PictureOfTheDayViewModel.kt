@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val NASA_API_KEY = "b06498a8-768d-4aec-ad83-84d9d309e06d"
+private const val NASA_API_KEY = "xYva3jM06es5E1pNtNhlVcUvWtI0xoy8aD1buFq0"
 
 class PictureOfTheDayViewModel(
     private val liveDataForViewToObserve: MutableLiveData<PictureOfTheDayData> = MutableLiveData(),

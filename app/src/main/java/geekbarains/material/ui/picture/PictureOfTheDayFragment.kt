@@ -19,7 +19,8 @@ import geekbarains.material.ui.chips.ChipsFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class PictureOfTheDayFragment : Fragment() {
-
+//Определим переменную типа BottomSheetBehaviour. В качестве generic передаём тип контейнера нашего BottomSheet.
+// Этот instance будет управлять нашей нижней панелью.
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private val viewModel: PictureOfTheDayViewModel by lazy {
         ViewModelProviders.of(this).get(PictureOfTheDayViewModel::class.java)
@@ -40,6 +41,7 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //В методе onViewCreated вызовем метод: setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         setBottomSheetBehavior(view.findViewById(R.id.bottom_sheet_container))
         input_layout.setEndIconOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply {
@@ -57,10 +59,14 @@ class PictureOfTheDayFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.app_bar_fav -> toast("Favourite")
-            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+            //Создадим фрагмент для работы с Chips, будем запускать его по нажатию на кнопку меню настроек
+            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()?.
+            add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
+           //Добавим в метод onOptionsItemSelected слушатель нажатия
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
+                    //создаём класс BottomNavigationDrawerFragment() и через метод show его отображаем
                 }
             }
         }
@@ -98,6 +104,7 @@ class PictureOfTheDayFragment : Fragment() {
         val context = activity as MainActivity
         context.setSupportActionBar(view.findViewById(R.id.bottom_app_bar))
         setHasOptionsMenu(true)
+        //добавим немного кода в метод setBottomAppBar для демонстрации возможностей
         fab.setOnClickListener {
             if (isMain) {
                 isMain = false
@@ -116,6 +123,8 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
+    //Напишем метод, в который будем передавать наш BottomSheet и инициализировать bottomSheetBehavior.
+    // Сразу укажем его состояние (свёрнутое, но не скрытое)
     private fun setBottomSheetBehavior(bottomSheet: ConstraintLayout) {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -128,6 +137,8 @@ class PictureOfTheDayFragment : Fragment() {
         }
     }
 
+    //Добавим переменную private var isMain = true в companion object.
+    //Теперь у нас изменяется нижняя панель в зависимости от того, на какой экран мы переходим.
     companion object {
         fun newInstance() = PictureOfTheDayFragment()
         private var isMain = true
