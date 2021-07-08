@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="MyAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#592149AE</item>
+        <item name="materialCardViewStyle">@style/MyCardStyle</item>
+    </style>
+
+    <style name="MyCardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">#00FF00</item>
+    </style>
+
+</resources>
