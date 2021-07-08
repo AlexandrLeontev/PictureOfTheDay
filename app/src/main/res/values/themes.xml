@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <style name="MyAppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#592149AE</item>
-        <item name="materialCardViewStyle">@style/MyCardStyle</item>
+    <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#F6EC24</item>
+        <item name="colorAccent">#F6EC24</item>
+        <item name="colorSurface">#F6EC24</item>
+        <item name="backgroundColor">#F6EC24</item>
+        <item name="colorOnSurface">#0E0C0B</item>
+        <item name="android:textColorSecondary">@color/colorPrimary</item>
+        <item name="boxBackgroundColor">@color/text_field_background</item>
     </style>
 
-    <style name="MyCardStyle" parent="Widget.MaterialComponents.CardView">
-        <item name="cardBackgroundColor">#00FF00</item>
+    <style name="DarkTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">#BCB8B5</item>
+        <item name="colorAccent">#BCB8B5</item>
+        <item name="colorSurface">#BCB8B5</item>
+        <item name="backgroundColor">#BCB8B5</item>
+        <item name="colorOnSurface">#0E0C0B</item>
     </style>
 
 </resources>
