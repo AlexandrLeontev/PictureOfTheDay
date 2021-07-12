@@ -15,6 +15,8 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import geekbarains.material.R
 import geekbarains.material.ui.MainActivity
+import geekbarains.material.ui.api.ApiActivity
+import geekbarains.material.ui.apibottom.ApiBottomActivity
 import geekbarains.material.ui.chips.ChipsFragment
 import kotlinx.android.synthetic.main.main_fragment.*
 
@@ -58,17 +60,15 @@ class PictureOfTheDayFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.app_bar_fav -> toast("Favourite")
-            //Создадим фрагмент для работы с Chips, будем запускать его по нажатию на кнопку меню настроек
-            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()?.
-            add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
-           //Добавим в метод onOptionsItemSelected слушатель нажатия
+            R.id.app_bar_fav -> activity?.let { startActivity(Intent(it, ApiBottomActivity::class.java)) }
+            R.id.app_bar_settings -> activity?.supportFragmentManager?.beginTransaction()
+                    ?.add(R.id.container, ChipsFragment())?.addToBackStack(null)?.commit()
             android.R.id.home -> {
                 activity?.let {
                     BottomNavigationDrawerFragment().show(it.supportFragmentManager, "tag")
-                    //создаём класс BottomNavigationDrawerFragment() и через метод show его отображаем
                 }
             }
+            R.id.app_bar_api -> activity?.let { startActivity(Intent(it, ApiActivity::class.java)) }
         }
         return super.onOptionsItemSelected(item)
     }

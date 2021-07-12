@@ -18,5 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.api.ApiActivity"/>
+        <activity android:name=".ui.apibottom.ApiBottomActivity"/>
     </application>
+
 </manifest>
