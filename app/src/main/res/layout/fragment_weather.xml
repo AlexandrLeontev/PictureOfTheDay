@@ -6,8 +6,18 @@
 
     <ImageView
         android:layout_width="match_parent"
+        android:layout_height="498dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/moon" />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/bg_system" />
+        android:gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:textSize="@dimen/layble_text_size"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/Moon" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -32,7 +42,7 @@
             android:layout_marginLeft="7dp"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
-            android:src="@drawable/swipe_indicator_passive" />
+            android:src="@drawable/swipe_indicator_active" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -41,6 +51,7 @@
             android:layout_marginLeft="7dp"
             android:layout_marginEnd="7dp"
             android:layout_marginRight="7dp"
-            android:src="@drawable/swipe_indicator_active" />
+            android:src="@drawable/swipe_indicator_passive" />
     </LinearLayout>
+
 </FrameLayout>

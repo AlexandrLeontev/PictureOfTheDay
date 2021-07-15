@@ -6,8 +6,18 @@
 
     <ImageView
         android:layout_width="match_parent"
+        android:layout_height="498dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/mars" />
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srcCompat="@drawable/bg_mars" />
+        android:gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:textSize="@dimen/layble_text_size"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/Mars" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,4 +53,5 @@
             android:layout_marginRight="7dp"
             android:src="@drawable/swipe_indicator_passive" />
     </LinearLayout>
+
 </FrameLayout>

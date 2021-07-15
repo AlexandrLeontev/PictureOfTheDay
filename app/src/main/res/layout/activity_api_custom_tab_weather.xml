@@ -13,7 +13,7 @@
         android:drawableStart="@drawable/ic_system"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:text="Weather"
+        android:text="Moon"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
