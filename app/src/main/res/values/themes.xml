@@ -2,9 +2,9 @@
 <resources>
     
     <style name="LightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">#F6EC24</item>
-        <item name="colorAccent">#F6EC24</item>
-        <item name="colorSurface">#F6EC24</item>
+        <item name="colorPrimary">#BCCABD</item>
+        <item name="colorAccent">#F6D324</item>
+        <item name="colorSurface">#BCCABD</item>
         <item name="backgroundColor">#F6EC24</item>
         <item name="colorOnSurface">#0E0C0B</item>
         <item name="android:textColorSecondary">@color/colorPrimary</item>
