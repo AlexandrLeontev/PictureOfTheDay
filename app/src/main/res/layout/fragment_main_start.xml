@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -42,7 +41,8 @@
                 app:endIconMode="custom"
                 app:helperText="@string/wiki_helper_text"
                 app:layout_constraintBottom_toTopOf="@+id/image_view"
-                app:layout_constraintStart_toEndOf="parent">
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/input_edit_text"
@@ -51,6 +51,15 @@
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <geekbarains.material.util.EquilateralImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/photo_of_the_day_stub"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/input_layout"
+                app:srcCompat="@drawable/ic_no_photo_vector" />
         </androidx.constraintlayout.motion.widget.MotionLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -75,22 +84,4 @@
         app:layout_anchor="@id/bottom_app_bar"
         app:srcCompat="@drawable/ic_plus_fab"
         app:tint="#FFFFFF" />
-
-    <geekbarains.material.util.EquilateralImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:contentDescription="@string/photo_of_the_day_stub"
-        android:layout_marginTop="60dp"
-        android:rotation="180"
-        app:layout_anchor="@+id/nestedScrollView"
-        app:layout_anchorGravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_no_photo_vector" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

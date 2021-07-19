@@ -10,6 +10,16 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/play_pause_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/play_pause_circle"
+            android:backgroundTint="@color/colorAccent"
+            android:checked="true"
+            android:contentDescription="@null"
+            android:thumb="@null" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
