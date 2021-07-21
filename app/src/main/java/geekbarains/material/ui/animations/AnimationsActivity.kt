@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.view.animation.BounceInterpolator
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -52,42 +53,57 @@ class AnimationsActivity : AppCompatActivity() {
 
     private fun expandFAB() {
         isExpanded = true
-        ObjectAnimator.ofFloat(plus_imageview, "rotation", 0f, 225f).start()
-        ObjectAnimator.ofFloat(option_two_container, "translationY", -130f).start()
-        ObjectAnimator.ofFloat(option_one_container, "translationY", -250f).start()
+//        val objAnimator = ObjectAnimator.ofFloat(plus_imageview, "rotation", 0f, 225f).setDuration(1000L)
+//        objAnimator.interpolator = BounceInterpolator()
+//        objAnimator.start()
 
-        option_two_container.animate()
-            .alpha(1f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    option_two_container.isClickable = true
-                    option_two_container.setOnClickListener {
-                        Toast.makeText(this@AnimationsActivity, "Option 2", Toast.LENGTH_SHORT)
-                            .show()
+        //       ObjectAnimator.ofFloat(option_two_container, "translationY", -130f).start()
+       // ObjectAnimator.ofFloat(option_one_container, "translationY", -250f).start()
+
+        plus_imageview
+                .animate()
+                .rotation(225f)
+                .scaleX(3f)
+                .scaleY(3f)
+                .setDuration(1000L)
+
+        option_two_container
+                .animate()
+                .alpha(1f)
+                .translationY(-130f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        option_two_container.isClickable = true
+                        option_two_container.setOnClickListener {
+                            Toast.makeText(this@AnimationsActivity, "Option 2", Toast.LENGTH_SHORT)
+                                    .show()
+                        }
                     }
-                }
-            })
-        option_one_container.animate()
-            .alpha(1f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    option_one_container.isClickable = true
-                    option_one_container.setOnClickListener {
-                        Toast.makeText(this@AnimationsActivity, "Option 1", Toast.LENGTH_SHORT)
-                            .show()
+                })
+
+        option_one_container
+                .animate()
+                .alpha(1f)
+                .translationY(-250f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        option_one_container.isClickable = true
+                        option_one_container.setOnClickListener {
+                            Toast.makeText(this@AnimationsActivity, "Option 1", Toast.LENGTH_SHORT)
+                                    .show()
+                        }
                     }
-                }
-            })
+                })
         transparent_background.animate()
-            .alpha(0.9f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    transparent_background.isClickable = true
-                }
-            })
+                .alpha(0.9f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        transparent_background.isClickable = true
+                    }
+                })
     }
 
     private fun collapseFab() {
@@ -97,29 +113,29 @@ class AnimationsActivity : AppCompatActivity() {
         ObjectAnimator.ofFloat(option_one_container, "translationY", 0f).start()
 
         option_two_container.animate()
-            .alpha(0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    option_two_container.isClickable = false
-                    option_one_container.setOnClickListener(null)
-                }
-            })
+                .alpha(0f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        option_two_container.isClickable = false
+                        option_one_container.setOnClickListener(null)
+                    }
+                })
         option_one_container.animate()
-            .alpha(0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    option_one_container.isClickable = false
-                }
-            })
+                .alpha(0f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        option_one_container.isClickable = false
+                    }
+                })
         transparent_background.animate()
-            .alpha(0f)
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    transparent_background.isClickable = false
-                }
-            })
+                .alpha(0f)
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        transparent_background.isClickable = false
+                    }
+                })
     }
 }

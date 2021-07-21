@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.transition.ChangeBounds
 import android.transition.TransitionManager
 import android.view.animation.AnticipateOvershootInterpolator
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet
 import geekbarains.material.R
@@ -23,22 +24,38 @@ class AnimationsActivityBonus : AppCompatActivity() {
     private fun showComponents() {
         show = true
 
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(this, R.layout.activity_animations_bonus_end)
+//        val constraintSet = ConstraintSet()
+//        constraintSet.clone(this, R.layout.activity_animations_bonus_end)
+//
+//        val transition = ChangeBounds()
+//        transition.interpolator = AnticipateOvershootInterpolator(1.0f)
+//        transition.duration = 1200
+//
+//        TransitionManager.beginDelayedTransition(constraint_container, transition)
+//        constraintSet.applyTo(constraint_container)
 
-        val transition = ChangeBounds()
-        transition.interpolator = AnticipateOvershootInterpolator(1.0f)
-        transition.duration = 1200
-
-        TransitionManager.beginDelayedTransition(constraint_container, transition)
-        constraintSet.applyTo(constraint_container)
+        applyAnimation(R.layout.activity_animations_bonus_end)
     }
 
     private fun hideComponents() {
         show = false
+//
+//        val constraintSet = ConstraintSet()
+//        constraintSet.clone(this, R.layout.activity_animations_bonus_start)
+//
+//        val transition = ChangeBounds()
+//        transition.interpolator = AnticipateOvershootInterpolator(1.0f)
+//        transition.duration = 1200
+//
+//        TransitionManager.beginDelayedTransition(constraint_container, transition)
+//        constraintSet.applyTo(constraint_container)
 
+        applyAnimation(R.layout.activity_animations_bonus_start)
+    }
+
+    private fun applyAnimation(@LayoutRes layout : Int) {
         val constraintSet = ConstraintSet()
-        constraintSet.clone(this, R.layout.activity_animations_bonus_start)
+        constraintSet.clone(this, layout)
 
         val transition = ChangeBounds()
         transition.interpolator = AnticipateOvershootInterpolator(1.0f)
