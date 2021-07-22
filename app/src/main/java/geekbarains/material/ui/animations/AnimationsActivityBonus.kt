@@ -23,33 +23,11 @@ class AnimationsActivityBonus : AppCompatActivity() {
 
     private fun showComponents() {
         show = true
-
-//        val constraintSet = ConstraintSet()
-//        constraintSet.clone(this, R.layout.activity_animations_bonus_end)
-//
-//        val transition = ChangeBounds()
-//        transition.interpolator = AnticipateOvershootInterpolator(1.0f)
-//        transition.duration = 1200
-//
-//        TransitionManager.beginDelayedTransition(constraint_container, transition)
-//        constraintSet.applyTo(constraint_container)
-
         applyAnimation(R.layout.activity_animations_bonus_end)
     }
 
     private fun hideComponents() {
         show = false
-//
-//        val constraintSet = ConstraintSet()
-//        constraintSet.clone(this, R.layout.activity_animations_bonus_start)
-//
-//        val transition = ChangeBounds()
-//        transition.interpolator = AnticipateOvershootInterpolator(1.0f)
-//        transition.duration = 1200
-//
-//        TransitionManager.beginDelayedTransition(constraint_container, transition)
-//        constraintSet.applyTo(constraint_container)
-
         applyAnimation(R.layout.activity_animations_bonus_start)
     }
 
