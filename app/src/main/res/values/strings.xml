@@ -11,6 +11,7 @@
     <string name="Moon">Moon</string>
     <string name="api">api</string>
     <string name="Planets">Планеты</string>
+    <string name="lorem_ipsum">lorem_ipsum</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

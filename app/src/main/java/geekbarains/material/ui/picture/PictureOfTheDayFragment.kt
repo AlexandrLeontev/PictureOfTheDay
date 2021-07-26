@@ -1,6 +1,7 @@
 package geekbarains.material.ui.picture
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.view.*
@@ -18,7 +19,9 @@ import geekbarains.material.ui.MainActivity
 import geekbarains.material.ui.api.ApiActivity
 import geekbarains.material.ui.apibottom.ApiBottomActivity
 import geekbarains.material.ui.chips.ChipsFragment
+import kotlinx.android.synthetic.main.fragment_main_explanation_text.*
 import kotlinx.android.synthetic.main.main_fragment.*
+
 
 class PictureOfTheDayFragment : Fragment() {
 //Определим переменную типа BottomSheetBehaviour. В качестве generic передаём тип контейнера нашего BottomSheet.
@@ -77,6 +80,9 @@ class PictureOfTheDayFragment : Fragment() {
         when (data) {
             is PictureOfTheDayData.Success -> {
                 val serverResponseData = data.serverResponseData
+                serverResponseData.explanation?.let {
+                    text_view.text = it
+                }
                 val url = serverResponseData.url
                 if (url.isNullOrEmpty()) {
                     //showError("Сообщение, что ссылка пустая")
