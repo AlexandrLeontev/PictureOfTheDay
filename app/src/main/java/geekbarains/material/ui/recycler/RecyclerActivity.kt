@@ -29,23 +29,23 @@ class RecyclerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler)
         val data = arrayListOf(
-            Pair(Data(1, "Mars", ""), false)
+                Pair(Data(1, "Mars", ""), false)
         )
 
         data.add(0, Pair(Data(0, "Header"), false))
 
         adapter = RecyclerActivityAdapter(
-            object : RecyclerActivityAdapter.OnListItemClickListener {
-                override fun onItemClick(data: Data) {
-                    Toast.makeText(this@RecyclerActivity, data.someText, Toast.LENGTH_SHORT).show()
+                object : RecyclerActivityAdapter.OnListItemClickListener {
+                    override fun onItemClick(data: Data) {
+                        Toast.makeText(this@RecyclerActivity, data.someText, Toast.LENGTH_SHORT).show()
+                    }
+                },
+                data,
+                object : RecyclerActivityAdapter.OnStartDragListener {
+                    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
+                        itemTouchHelper.startDrag(viewHolder)
+                    }
                 }
-            },
-            data,
-            object : RecyclerActivityAdapter.OnStartDragListener {
-                override fun onStartDrag(viewHolder: RecyclerView.ViewHolder) {
-                    itemTouchHelper.startDrag(viewHolder)
-                }
-            }
         )
 
         recyclerView.adapter = adapter
@@ -53,7 +53,6 @@ class RecyclerActivity : AppCompatActivity() {
         itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
         itemTouchHelper.attachToRecyclerView(recyclerView)
         recyclerActivityDiffUtilFAB.setOnClickListener { changeAdapterData() }
-        //changeAdapterData()
     }
 
     private fun changeAdapterData() {
@@ -64,64 +63,66 @@ class RecyclerActivity : AppCompatActivity() {
     private fun createItemList(instanceNumber: Boolean): List<Pair<Data, Boolean>> {
         return when (instanceNumber) {
             false -> listOf(
-                Pair(Data(0, "Header"), false),
-                Pair(Data(1, "Mars", ""), false),
-                Pair(Data(2, "Mars", ""), false),
-                Pair(Data(3, "Mars", ""), false),
-                Pair(Data(4, "Mars", ""), false),
-                Pair(Data(5, "Mars", ""), false),
-                Pair(Data(6, "Mars", ""), false)
+                    Pair(Data(0, "Header"), false),
+                    Pair(Data(1, "Mars", ""), false),
+                    Pair(Data(2, "Mars", ""), false),
+                    Pair(Data(3, "Mars", ""), false),
+                    Pair(Data(4, "Mars", ""), false),
+                    Pair(Data(5, "Mars", ""), false),
+                    Pair(Data(6, "Mars", ""), false)
             )
             true -> listOf(
-                Pair(Data(0, "Header"), false),
-                Pair(Data(1, "Mars", ""), false),
-                Pair(Data(2, "Jupiter", ""), false),
-                Pair(Data(3, "Mars", ""), false),
-                Pair(Data(4, "Neptune", ""), false),
-                Pair(Data(5, "Saturn", ""), false),
-                Pair(Data(6, "Mars", ""), false)
+                    Pair(Data(0, "Header"), false),
+                    Pair(Data(1, "Mars", ""), false),
+                    Pair(Data(2, "Jupiter", ""), false),
+                    Pair(Data(3, "Mars", ""), false),
+                    Pair(Data(4, "Neptune", ""), false),
+                    Pair(Data(5, "Saturn", ""), false),
+                    Pair(Data(6, "Mars", ""), false)
             )
         }
     }
 }
 
 class RecyclerActivityAdapter(
-    private val onListItemClickListener: OnListItemClickListener,
-    private var data: MutableList<Pair<Data, Boolean>>,
-    private val dragListener: OnStartDragListener
+        private val onListItemClickListener: OnListItemClickListener,
+        private var data: MutableList<Pair<Data, Boolean>>,
+        private val dragListener: OnStartDragListener
 ) :
-    RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
-
+        RecyclerView.Adapter<BaseViewHolder>(), ItemTouchHelperAdapter {
+    // у  RecyclerView есть 3 основные метода, которые нужно реализовать: onCreateViewHolder,onBindViewHolder,getItemCount(),
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        // в onCreateViewHolder мы создаём ViewHolder и его инфлейтим
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
             TYPE_EARTH -> EarthViewHolder(
-                inflater.inflate(R.layout.activity_recycler_item_earth, parent, false) as View
+                    inflater.inflate(R.layout.activity_recycler_item_earth, parent, false) as View
             )
             TYPE_MARS ->
                 MarsViewHolder(
-                    inflater.inflate(R.layout.activity_recycler_item_mars, parent, false) as View
+                        inflater.inflate(R.layout.activity_recycler_item_mars, parent, false) as View
                 )
             else -> HeaderViewHolder(
-                inflater.inflate(R.layout.activity_recycler_item_header, parent, false) as View
+                    inflater.inflate(R.layout.activity_recycler_item_header, parent, false) as View
             )
         }
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        //onBindViewHolder нужен для того, чтобы внутрь ViewHolder положить какие-то данные и он их затем отображал
         holder.bind(data[position])
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder,
-        position: Int,
-        payloads: MutableList<Any>
+            holder: BaseViewHolder,
+            position: Int,
+            payloads: MutableList<Any>
     ) {
         if (payloads.isEmpty())
             super.onBindViewHolder(holder, position, payloads)
         else {
             val combinedChange =
-                createCombinedPayload(payloads as List<Change<Pair<Data, Boolean>>>)
+                    createCombinedPayload(payloads as List<Change<Pair<Data, Boolean>>>)
             val oldData = combinedChange.oldData
             val newData = combinedChange.newData
 
@@ -132,6 +133,7 @@ class RecyclerActivityAdapter(
     }
 
     override fun getItemCount(): Int {
+        // getItemCount() возвращает колличество элементов, которые находятся внутри адаптера
         return data.size
     }
 
@@ -155,11 +157,14 @@ class RecyclerActivityAdapter(
         notifyItemRemoved(position)
     }
 
-    fun setItems(newItems: List<Pair<Data, Boolean>>) {
-        val result = DiffUtil.calculateDiff(DiffUtilCallback(data, newItems))
+    fun setItems(newItems: List<Pair<Data, Boolean>>) { //было
+        // fun setItems(newItems: MutableList<Pair<Data, Boolean>>) { // стало
+        val calback = DiffUtilCallback(data, newItems)
+        val result = DiffUtil.calculateDiff(calback)  // стало
+        // val result = DiffUtil.calculateDiff(DiffUtilCallback(data, newItems)) // было
+        data.clear() // чистим старые данные // после изменения List на MutableList в data.clear() и data.addAll(newItems) не нужны
+        data.addAll(newItems) //добавляем новые
         result.dispatchUpdatesTo(this)
-        data.clear()
-        data.addAll(newItems)
     }
 
     fun appendItem() {
@@ -170,27 +175,31 @@ class RecyclerActivityAdapter(
     private fun generateItem() = Pair(Data(1, "Mars", ""), false)
 
     inner class DiffUtilCallback(
-        private var oldItems: List<Pair<Data, Boolean>>,
-        private var newItems: List<Pair<Data, Boolean>>
+            private var oldItems: List<Pair<Data, Boolean>>, // старые данные
+            private var newItems: List<Pair<Data, Boolean>> // новые данные
     ) : DiffUtil.Callback() {
 
         override fun getOldListSize(): Int = oldItems.size
 
         override fun getNewListSize(): Int = newItems.size
 
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition].first.id == newItems[newItemPosition].first.id
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = // следит за id viewHolder-ов
+                // здесь сравниваем по id
+                oldItems[oldItemPosition].first.id == newItems[newItemPosition].first.id
 
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-            oldItems[oldItemPosition].first.someText == newItems[newItemPosition].first.someText
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean = // отвечает за наполнение ViewHolder.
+        // В нашем случае за текст описания планеты Марс
+                //здесь сравниваем по контенту
+                oldItems[oldItemPosition].first.someText == newItems[newItemPosition].first.someText
 
         override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? {
+            // узнаём как наши данные изменились
             val oldItem = oldItems[oldItemPosition]
             val newItem = newItems[newItemPosition]
 
             return Change(
-                oldItem,
-                newItem
+                    oldItem,
+                    newItem
             )
         }
     }
@@ -202,7 +211,7 @@ class RecyclerActivityAdapter(
                 itemView.descriptionTextView.text = dataItem.first.someDescription
                 itemView.wikiImageView.setOnClickListener {
                     onListItemClickListener.onItemClick(
-                        dataItem.first
+                            dataItem.first
                     )
                 }
             }
@@ -217,8 +226,9 @@ class RecyclerActivityAdapter(
             itemView.removeItemImageView.setOnClickListener { removeItem() }
             itemView.moveItemDown.setOnClickListener { moveDown() }
             itemView.moveItemUp.setOnClickListener { moveUp() }
+            // moveDown() и moveUp() отвечают за движения вверх и вниз красными стрелочками
             itemView.marsDescriptionTextView.visibility =
-                if (dataItem.second) View.VISIBLE else View.GONE
+                    if (dataItem.second) View.VISIBLE else View.GONE
             itemView.marsTextView.setOnClickListener { toggleText() }
             itemView.dragHandleImageView.setOnTouchListener { _, event ->
                 if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
@@ -228,9 +238,9 @@ class RecyclerActivityAdapter(
             }
         }
 
-        private fun addItem() {
+        private fun addItem() { // добавляет планету нажатием на +
             data.add(layoutPosition, generateItem())
-            notifyItemInserted(layoutPosition)
+            notifyItemInserted(layoutPosition) // показываем что произошли изменения и recyclerView готовит анимацию
         }
 
         private fun removeItem() {
@@ -243,7 +253,9 @@ class RecyclerActivityAdapter(
                 data.removeAt(currentPosition).apply {
                     data.add(currentPosition - 1, this)
                 }
-                notifyItemMoved(currentPosition, currentPosition - 1)
+                //data.removeAt передвигаем элементы внутри коллекции
+                // notifyDataSetChanged() // переход без анимации
+                notifyItemMoved(currentPosition, currentPosition - 1) // переход с анимацией
             }
         }
 
@@ -260,7 +272,7 @@ class RecyclerActivityAdapter(
             data[layoutPosition] = data[layoutPosition].let {
                 it.first to !it.second
             }
-            notifyItemChanged(layoutPosition)
+            notifyItemChanged(layoutPosition) // при нажатии на планету происходит моргание
         }
 
         override fun onItemSelected() {
@@ -299,9 +311,9 @@ class RecyclerActivityAdapter(
 }
 
 data class Data(
-    val id: Int = 0,
-    val someText: String = "Text",
-    val someDescription: String? = "Description"
+        val id: Int = 0,
+        val someText: String = "Text",
+        val someDescription: String? = "Description"
 )
 
 interface ItemTouchHelperAdapter {
@@ -314,39 +326,41 @@ interface ItemTouchHelperViewHolder {
     fun onItemClear()
 }
 
-class ItemTouchHelperCallback(private val adapter: RecyclerActivityAdapter) :
-    ItemTouchHelper.Callback() {
+class ItemTouchHelperCallback( // понимает какое действие произошло. СВАЙП ИЛИ ИЗМЕНЕНИЕ ПОЗИЦИИ
+        // позволяет таскать элемент при зажатии на нем курсора
+        private val adapter: RecyclerActivityAdapter
+        ) : ItemTouchHelper.Callback() {
 
     override fun isLongPressDragEnabled(): Boolean {
         return true
     }
 
-    override fun isItemViewSwipeEnabled(): Boolean {
-        return true
+    override fun isItemViewSwipeEnabled(): Boolean { // позволяем работу со свайпами
+        return true // да
     }
 
-    override fun getMovementFlags(
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
+    override fun getMovementFlags( // определяем в какую сторону разрешено двигать элементы
+            recyclerView: RecyclerView, // определяем нужный вьюХолдер в котором будет разрешено действие
+            viewHolder: RecyclerView.ViewHolder
     ): Int {
-        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
-        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END
+        val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN // верх и низ
+        val swipeFlags = ItemTouchHelper.START or ItemTouchHelper.END // лево и право. End вместо Right нужен для учёта Арабских стран
         return makeMovementFlags(
-            dragFlags,
-            swipeFlags
+                dragFlags,
+                swipeFlags
         )
     }
 
-    override fun onMove(
-        recyclerView: RecyclerView,
-        source: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
+    override fun onMove( // замечает, что произошло изменение двух ViewHolder-ов и хорошо бы изменить данные в адаптере
+            recyclerView: RecyclerView,
+            source: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
     ): Boolean {
         adapter.onItemMove(source.adapterPosition, target.adapterPosition)
         return true
     }
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) {
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, i: Int) { // произошёл свайп и после идёт изменение элемента
         adapter.onItemDismiss(viewHolder.adapterPosition)
     }
 
@@ -365,23 +379,23 @@ class ItemTouchHelperCallback(private val adapter: RecyclerActivityAdapter) :
     }
 
     override fun onChildDraw(
-        c: Canvas,
-        recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        dX: Float,
-        dY: Float,
-        actionState: Int,
-        isCurrentlyActive: Boolean
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
     ) {
-        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) { // отвечает за изменение прозачности вьюшки после свайпа в крайнее положение
             val width = viewHolder.itemView.width.toFloat()
             val alpha = 1.0f - abs(dX) / width
             viewHolder.itemView.alpha = alpha
             viewHolder.itemView.translationX = dX
         } else {
             super.onChildDraw(
-                c, recyclerView, viewHolder, dX, dY,
-                actionState, isCurrentlyActive
+                    c, recyclerView, viewHolder, dX, dY,
+                    actionState, isCurrentlyActive
             )
         }
     }
